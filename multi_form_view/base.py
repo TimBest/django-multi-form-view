@@ -1,5 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.generic import FormView
 
 
@@ -7,7 +6,7 @@ class MultipleFormsView(FormView):
     """ Mixin to handle multiple form classses """
     form_classes = {}
     template_name = None
-    success_url = 'home'
+    success_url = '/'
 
     def are_forms_valid(self, forms):
         for form in forms.itervalues():
@@ -15,12 +14,8 @@ class MultipleFormsView(FormView):
                 return False
         return True
 
-    def forms_valid(self, forms):
-        return self.get_success_url(self)
-
     def forms_invalid(self, forms):
         context = self.get_context_data()
-        context['next'] = self.request.POST.get('next')
         context.update(forms)
         return render(self.request, self.template_name, context)
 
@@ -28,12 +23,6 @@ class MultipleFormsView(FormView):
         context = self.get_context_data()
         context.update(self.get_forms())
         return render(request, self.template_name, context=context)
-
-    def get_context_data(self, **kwargs):
-        context = super(MultipleFormsView, self).get_context_data(**kwargs)
-        context['next'] = self.request.GET.get('next')
-        context['request'] = self.request
-        return context
 
     def get_forms(self):
         forms = {}
@@ -57,13 +46,6 @@ class MultipleFormsView(FormView):
         for key in self.form_classes.iterkeys():
             initial[key] = {}
         return initial
-
-    def get_success_url(self):
-        success_url = self.request.POST.get('next', "")
-        if success_url and success_url != "None":
-            return HttpResponseRedirect(self.request.POST['next'])
-        else:
-            return redirect(self.success_url)
 
     def post(self, request, **kwargs):
         forms = self.get_forms()
