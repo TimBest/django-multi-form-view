@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import FormView
 
 
-class MultipleFormsView(FormView):
+class MultiFormView(FormView):
     """ Mixin to handle multiple form classses """
     form_classes = {}
     template_name = None
@@ -55,7 +55,7 @@ class MultipleFormsView(FormView):
             return self.forms_invalid(forms)
 
 
-class MultipleModelFormsView(MultipleFormsView):
+class MultiModelFormView(MultiFormView):
     """ The object coresponding to the form must use the sam key """
 
     def get_objects(self):
