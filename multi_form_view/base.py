@@ -10,7 +10,7 @@ class MultipleFormsView(FormView):
     success_url = 'home'
 
     def are_forms_valid(self, forms):
-        for key, form in forms.iteritems():
+        for form in forms.itervalues():
             if not form.is_valid():
                 return False
         return True
@@ -24,10 +24,9 @@ class MultipleFormsView(FormView):
         context.update(forms)
         return render(self.request, self.template_name, context)
 
-    def get(self, request, username=None, **kwargs):
+    def get(self, request, **kwargs):
         context = self.get_context_data()
         context.update(self.get_forms())
-        # TODO: append next url to response?
         return render(request, self.template_name, context=context)
 
     def get_context_data(self, **kwargs):
@@ -55,7 +54,7 @@ class MultipleFormsView(FormView):
 
     def get_initial_data(self):
         initial = {}
-        for key, form_class in self.form_classes.iteritems():
+        for key in self.form_classes.iterkeys():
             initial[key] = {}
         return initial
 
@@ -73,12 +72,13 @@ class MultipleFormsView(FormView):
         else:
             return self.forms_invalid(forms)
 
+
 class MultipleModelFormsView(MultipleFormsView):
     """ The object coresponding to the form must use the sam key """
 
     def get_objects(self):
         objects = {}
-        for key, form_class in self.form_classes.iteritems():
+        for key in self.form_classes.iterkeys():
             objects[key] = None
         return objects
 
