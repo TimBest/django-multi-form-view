@@ -1,0 +1,2 @@
+include README.md LICENCE
+recursive-include multi_form_view *.py
