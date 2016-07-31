@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<a href="{% url 'records_new' %}">Create Record</a>
+<table>
+  <tr>
+    <th>Image</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th></th>
+  </tr>
+  {% for record in object_list %}
+  <tr>
+    <td>
+      <img src="{{ record.photo.image.url }}" height="50" width="50" alt="record image"/>
+      {{ record.photo.tag }}
+    </td>
+    <td>{{ record.title }}</td>
+    <td>{{ record.description }}</td>
+    <td>
+      <a href="{% url 'records_edit' record.id %}">Edit</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

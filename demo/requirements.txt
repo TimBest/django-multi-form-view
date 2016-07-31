@@ -1,0 +1,4 @@
+Django==1.9.8
+Pillow==3.3.0
+pkg-resources==0.0.0
+-e git+https://github.com/TimothyBest/django-multi-form-view.git#egg=django-multi-form-view
