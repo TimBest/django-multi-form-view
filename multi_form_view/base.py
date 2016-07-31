@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import FormView
 
@@ -14,10 +15,20 @@ class MultiFormView(FormView):
                 return False
         return True
 
+    def forms_valid(self, forms):
+        for form in forms.itervalues():
+            form.save()
+        return HttpResponseRedirect(self.get_success_url())
+
     def forms_invalid(self, forms):
         context = self.get_context_data()
         context.update(forms)
         return render(self.request, self.template_name, context)
+
+    def get_context_data(self, **kwargs):
+        if 'view' not in kwargs:
+            kwargs['view'] = self
+        return kwargs
 
     def get(self, request, **kwargs):
         context = self.get_context_data()
