@@ -15,3 +15,5 @@ dependencies:
 test:
   override:
     - coverage run demo/manage.py behave
+  post:
+    - codecov
