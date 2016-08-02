@@ -14,4 +14,4 @@ dependencies:
 
 test:
   override:
-    - python demo/manage.py behave
+    - coverage run demo/manage.py behave
