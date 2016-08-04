@@ -6,6 +6,6 @@
 
 ## Demo
 
-- `pip install -requirments.txt`
+- `pip install -r requirments.txt`
 - `python manage.py migrate`
 - `python manage.py runserver`
