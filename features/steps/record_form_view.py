@@ -30,3 +30,18 @@ def step_impl(context):
     assert context.response.status_code == 200
     assert Photo.objects.count() == 1
     assert Record.objects.count() == 1
+
+@given('that a user fills in the form without uploading an image')
+def step_impl(context):
+    context.values = {
+        "title": "Test title",
+        "description": "Test description",
+        "tag": Photo.UNKNOWN,
+        "image": None,
+    }
+
+@then('a Record and Photo instance are not created')
+def step_impl(context):
+    assert context.response.status_code == 200
+    assert Photo.objects.count() == 0
+    assert Record.objects.count() == 0
