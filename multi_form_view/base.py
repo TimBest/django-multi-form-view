@@ -4,7 +4,9 @@ from django.views.generic import FormView
 
 
 class MultiFormView(FormView):
-    """ Mixin to handle multiple form classses """
+    """
+    Mixin to handle multiple form classes
+    """
     form_classes = {}
     template_name = None
     success_url = '/'
@@ -67,7 +69,9 @@ class MultiFormView(FormView):
 
 
 class MultiModelFormView(MultiFormView):
-    """ The object coresponding to the form must use the sam key """
+    """
+    The object corresponding to the form must use the same key
+    """
 
     def get_objects(self):
         objects = {}
