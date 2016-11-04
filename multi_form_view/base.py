@@ -18,13 +18,12 @@ class MultiFormView(FormView):
         return True
 
     def forms_valid(self, forms):
-        for form in forms.itervalues():
-            form.save()
+        self.on_forms_valid(forms)
         return HttpResponseRedirect(self.get_success_url())
 
     def forms_invalid(self, forms):
         context = self.get_context_data()
-        context.update(forms)
+        self.on_forms_invalid(context, forms)
         return render(self.request, self.template_name, context)
 
     def get_context_data(self, **kwargs):
@@ -60,6 +59,12 @@ class MultiFormView(FormView):
             initial[key] = {}
         return initial
 
+    def on_forms_valid(self, forms):
+        pass
+
+    def on_forms_invalid(self, context, forms):
+        context.update(forms)
+
     def post(self, request, **kwargs):
         forms = self.get_forms()
         if self.are_forms_valid(forms):
@@ -87,3 +92,7 @@ class MultiModelFormView(MultiFormView):
         for key, form_class in self.form_classes.iteritems():
             forms[key] = form_class(instance=objects[key], initial=initial[key], **form_kwargs)
         return forms
+
+    def on_forms_valid(self, forms):
+        for form in forms.itervalues():
+            form.save()
