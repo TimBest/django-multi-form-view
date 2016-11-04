@@ -1,16 +1,10 @@
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 
-from multi_form_view import MultiModelFormView
+from multi_form_view import MultiFormView, MultiModelFormView
 
-from base.forms import PhotoForm, RecordForm
+from base.forms import ContactForm, PhotoForm, RecordForm, UserForm
 from base.models import Photo, Record
-
-
-class IndexView(TemplateView):
-    template_name = "base.html"
 
 
 class RecordListView(ListView):
@@ -21,7 +15,7 @@ class RecordListView(ListView):
 class RecordFormView(MultiModelFormView):
     form_classes = {
       'photo_form' : PhotoForm,
-      'record_form' : RecordForm
+      'record_form' : RecordForm,
     }
     record_id=None
     template_name = 'records_form.html'
@@ -40,9 +34,17 @@ class RecordFormView(MultiModelFormView):
     def get_success_url(self):
         return reverse('records')
 
-    def forms_valid(self, forms):
+    def on_forms_valid(self, forms):
         photo = forms['photo_form'].save()
         record = forms['record_form'].save(commit=False)
         record.photo = photo
         record.save()
-        return HttpResponseRedirect(self.get_success_url())
+
+
+class ContactView(MultiFormView):
+    form_classes = {
+      'contact_form' : ContactForm,
+      'user_form' : UserForm,
+    }
+    record_id=None
+    template_name = 'contact.html'
