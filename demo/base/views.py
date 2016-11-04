@@ -48,3 +48,6 @@ class ContactView(MultiFormView):
     }
     record_id=None
     template_name = 'contact.html'
+
+    def get_success_url(self):
+        return reverse('contact_sent')

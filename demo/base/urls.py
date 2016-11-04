@@ -14,5 +14,6 @@ urlpatterns = [
     url(r'^records/edit/(?P<record_id>\d+)$', views.RecordFormView.as_view(), name='records_edit'),
 
     url(r'^contact/$', views.ContactView.as_view(), name='contact'),
+    url(r'^cntact/sent/$', TemplateView.as_view(template_name='contact-sent.html'), name='contact_sent'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
