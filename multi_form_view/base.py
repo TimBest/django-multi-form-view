@@ -19,7 +19,7 @@ class MultiFormView(FormView):
         return HttpResponseRedirect(self.get_success_url())
 
     def forms_invalid(self, forms):
-        context = self.get_context_data(forms)
+        context = self.get_context_data(forms=forms)
         return render(self.request, self.template_name, context)
 
     def get(self, request, **kwargs):
@@ -30,9 +30,12 @@ class MultiFormView(FormView):
         """
         Add forms into the context dictionary
         """
+        context = {}
         if 'forms' not in kwargs:
-            kwargs['forms'] = self.get_form()
-        return super(MultiFormView, self).get_context_data(**kwargs)
+            context['forms'] = self.get_forms()
+        else:
+            context['forms'] = kwargs['forms']
+        return context
 
     def get_forms(self):
         forms = {}

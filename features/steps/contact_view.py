@@ -34,9 +34,5 @@ def step_impl(context):
 
 @then('the contact form is not successfully submitted')
 def step_impl(context):
-    context.test.assertFormError(
-        context.response,
-        'user_form',
-        'sender_email',
-        "This field is required."
-    )
+    for context in context.response.context:
+        assert context['forms']['user_form'].errors
