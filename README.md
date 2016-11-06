@@ -66,6 +66,7 @@ $ python manage.py runserver
 ```
 
 ## Testing
+Install [PhantomJS](http://phantomjs.org/)
 ```bash
 $ python demo/manage.py behave
 ```

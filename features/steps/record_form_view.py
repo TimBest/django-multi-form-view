@@ -8,40 +8,29 @@ from base.models import Photo, Record
 
 @given('that a user fills in the form with valid input')
 def step_impl(context):
-    image = open('test.png', 'r')
-
-    context.values = {
-        "title": "Test title",
-        "description": "Test description",
-        "tag": Photo.UNKNOWN,
-        "image": image,
-    }
+    context.browser.visit(context.get_url('records_new'))
+    context.browser.fill('title', 'Test title')
+    context.browser.fill('description', 'Test description')
+    context.browser.attach_file('image', 'test.png')
+    context.browser.choose('tag', Photo.UNKNOWN)
 
 @when('the user submits the form')
 def step_impl(context):
-    context.response = context.test.client.post(
-        context.get_url('/records/new/'),
-        context.values,
-        follow=True,
-    )
+    context.browser.find_by_css('input[type=submit]').first.click()
 
 @then('a Record and Photo instance are created')
 def step_impl(context):
-    assert context.response.status_code == 200
     assert Photo.objects.count() == 1
     assert Record.objects.count() == 1
 
 @given('that a user fills in the form without uploading an image')
 def step_impl(context):
-    context.values = {
-        "title": "Test title",
-        "description": "Test description",
-        "tag": Photo.UNKNOWN,
-        "image": None,
-    }
+    context.browser.visit(context.get_url('records_new'))
+    context.browser.fill('title', 'Test title')
+    context.browser.fill('description', 'Test description')
+    context.browser.choose('tag', Photo.UNKNOWN)
 
 @then('a Record and Photo instance are not created')
 def step_impl(context):
-    assert context.response.status_code == 200
     assert Photo.objects.count() == 0
     assert Record.objects.count() == 0
