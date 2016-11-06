@@ -13,49 +13,49 @@ $ pip install django-multi-form-view
 
 ## Usage
 
-### MultiFormView ([Example](demo/views.py))
+### MultiFormView ([Example](demo/base/views.py))
 **class multi_form_view.MultiFormView**  
-A single view that can display multiple Django forms. Handles displaying, redisplaying on error, and redirects on form success in
+A single view that can display multiple Django forms. Handles displaying, redisplaying on error, and redirects on form success in.
 
 #### Extends
-* django.views.generic import FormView  
+* django.views.generic import FormView
 
 #### Attributes and Methods
-`form_classes`  
-A dictionary containing to forms for the view.  
-`are_forms_valid()`  
-Check if all forms defined in `form_classes` are valid.  
-`forms_valid()`  
-Redirects to get_success_url().  
-`forms_invalid()`  
-Renders a response containing the form errors.  
-`get()`  
-Render the forms.  
-`get_context_data()`  
-Adds the results of `get_forms()` to the context dictionary with the key `'forms'`  
-`get_forms()`.  
-Initializes the forms defined in `form_classes` with initial data from `get_initial()` and kwargs from get_form_kwargs().  
-`get_form_kwargs()`  
-Build the keyword arguments required to instantiate the form.  
-`get_initial()`  
-Returns a copy of `initial` with empty initial data dictionaries for each form.  
-`post()`
-Uses `are_forms_valid()` to calls either `forms_valid()` or `forms_invalid()`.  
+* `form_classes`  
+  A dictionary containing to forms for the view.
+* `are_forms_valid()`  
+  Check if all forms defined in `form_classes` are valid.
+* `forms_valid()`  
+  Redirects to get_success_url().
+* `forms_invalid()`  
+  Renders a response containing the form errors.
+* `get()`  
+  Render the forms.
+* `get_context_data()`  
+  Adds the results of `get_forms()` to the context dictionary with the key `'forms'`.
+* `get_forms()`.  
+  Initializes the forms defined in `form_classes` with initial data from `get_initial()` and kwargs from get_form_kwargs().  
+* `get_form_kwargs()`.
+  Build the keyword arguments required to instantiate the form.  
+* `get_initial()`  
+  Returns a copy of `initial` with empty initial data dictionaries for each form.
+* `post()`
+  Uses `are_forms_valid()` to calls either `forms_valid()` or *  `forms_invalid()`.
 
-### MultiModelFormView ([Example](demo/views.py))
+### MultiModelFormView ([Example](demo/base/views.py))
 **class multi_form_view.MultiModelFormView**  
-A single view that can display multiple Django ModelForms. Handles displaying, redisplaying on error, and redirects on form success in
+A single view that can display multiple Django ModelForms. Handles displaying, redisplaying on error, and redirects on form success in.
 
 #### Extends
 * multi_form_view.MultiFormView
 
 #### Attributes and Methods
-`forms_valid()`  
-Calls `save()` on each form.   
-`get_forms()`.  
-Initializes the forms defined in `form_classes` with initial data from `get_initial()`, kwargs from get_form_kwargs() and form instance object from `get_objects()`.  
-`get_objects()`  
-Returns dictionary with the instance objects for each form. Keys should match the corresponding form  
+* `forms_valid()`  
+  Calls `save()` on each form.
+* `get_forms()`.  
+  Initializes the forms defined in `form_classes` with initial data from `get_initial()`, kwargs from get_form_kwargs() and form instance object from `get_objects()`.
+* `get_objects()`  
+  Returns dictionary with the instance objects for each form. Keys should match the corresponding form.
 
 ## Demo
 ```bash
