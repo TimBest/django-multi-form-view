@@ -11,39 +11,51 @@ Django class based views for using more than one Form or ModelForm in a single v
 $ pip install django-multi-form-view
 ```
 
-## Example
-```python
-from multi_form_view import MultiModelFormView
+## Usage
 
-class RecordFormView(MultiModelFormView):
-    form_classes = {
-      'photo_form' : PhotoForm,
-      'record_form' : RecordForm
-    }
-    record_id=None
-    template_name = 'records_form.html'
+### MultiFormView ([Example](demo/views.py))
+**class multi_form_view.MultiFormView**  
+A single view that can display multiple Django forms. Handles displaying, redisplaying on error, and redirects on form success in
 
-    def get_objects(self):
-        self.record_id = self.kwargs.get('record_id', None)
-        try:
-            record = Record.objects.get(id=self.record_id)
-        except Record.DoesNotExist:
-            record = None
-        return {
-          'record_form': record,
-          'photo_form': record.photo if record else None
-        }
+#### Extends
+* django.views.generic import FormView  
 
-    def get_success_url(self):
-        return reverse('records')
+#### Attributes and Methods
+`form_classes`  
+A dictionary containing to forms for the view.  
+`are_forms_valid()`  
+Check if all forms defined in `form_classes` are valid.  
+`forms_valid()`  
+Redirects to get_success_url().  
+`forms_invalid()`  
+Renders a response containing the form errors.  
+`get()`  
+Render the forms.  
+`get_context_data()`  
+Adds the results of `get_forms()` to the context dictionary with the key `'forms'`  
+`get_forms()`.  
+Initializes the forms defined in `form_classes` with initial data from `get_initial()` and kwargs from get_form_kwargs().  
+`get_form_kwargs()`  
+Build the keyword arguments required to instantiate the form.  
+`get_initial()`  
+Returns a copy of `initial` with empty initial data dictionaries for each form.  
+`post()`
+Uses `are_forms_valid()` to calls either `forms_valid()` or `forms_invalid()`.  
 
-    def forms_valid(self, forms):
-        photo = forms['photo_form'].save()
-        record = forms['record_form'].save(commit=False)
-        record.photo = photo
-        record.save()
-        return HttpResponseRedirect(self.get_success_url())
-```
+### MultiModelFormView ([Example](demo/views.py))
+**class multi_form_view.MultiModelFormView**  
+A single view that can display multiple Django ModelForms. Handles displaying, redisplaying on error, and redirects on form success in
+
+#### Extends
+* multi_form_view.MultiFormView
+
+#### Attributes and Methods
+`forms_valid()`  
+Calls `save()` on each form.   
+`get_forms()`.  
+Initializes the forms defined in `form_classes` with initial data from `get_initial()`, kwargs from get_form_kwargs() and form instance object from `get_objects()`.  
+`get_objects()`  
+Returns dictionary with the instance objects for each form. Keys should match the corresponding form  
 
 ## Demo
 ```bash

@@ -34,11 +34,12 @@ class RecordFormView(MultiModelFormView):
     def get_success_url(self):
         return reverse('records')
 
-    def on_forms_valid(self, forms):
+    def forms_valid(self, forms):
         photo = forms['photo_form'].save()
         record = forms['record_form'].save(commit=False)
         record.photo = photo
         record.save()
+        return super(RecordFormView, self).forms_valid(forms)
 
 
 class ContactView(MultiFormView):

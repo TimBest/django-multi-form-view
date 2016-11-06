@@ -8,8 +8,6 @@ class MultiFormView(FormView):
     Mixin to handle multiple form classes
     """
     form_classes = {}
-    template_name = None
-    success_url = '/'
 
     def are_forms_valid(self, forms):
         for form in forms.itervalues():
@@ -17,28 +15,28 @@ class MultiFormView(FormView):
                 return False
         return True
 
-    def forms_valid(self, forms):
-        self.on_forms_valid(forms)
+    def forms_valid(self, forms): #pylint: disable=unused-argument
         return HttpResponseRedirect(self.get_success_url())
 
     def forms_invalid(self, forms):
-        context = self.get_context_data()
-        self.on_forms_invalid(context, forms)
+        context = self.get_context_data(forms)
         return render(self.request, self.template_name, context)
-
-    def get_context_data(self, **kwargs):
-        if 'view' not in kwargs:
-            kwargs['view'] = self
-        return kwargs
 
     def get(self, request, **kwargs):
         context = self.get_context_data()
-        context.update(self.get_forms())
         return render(request, self.template_name, context=context)
+
+    def get_context_data(self, **kwargs):
+        """
+        Add forms into the context dictionary
+        """
+        if 'forms' not in kwargs:
+            kwargs['forms'] = self.get_form()
+        return super(MultiFormView, self).get_context_data(**kwargs)
 
     def get_forms(self):
         forms = {}
-        initial = self.get_initial_data()
+        initial = self.get_initial()
         form_kwargs = self.get_form_kwargs()
         for key, form_class in self.form_classes.iteritems():
             forms[key] = form_class(initial=initial[key], **form_kwargs)
@@ -53,17 +51,11 @@ class MultiFormView(FormView):
             })
         return kwargs
 
-    def get_initial_data(self):
-        initial = {}
+    def get_initial(self):
+        initial = super(MultiFormView, self).get_initial()
         for key in self.form_classes.iterkeys():
             initial[key] = {}
         return initial
-
-    def on_forms_valid(self, forms):
-        pass
-
-    def on_forms_invalid(self, context, forms):
-        context.update(forms)
 
     def post(self, request, **kwargs):
         forms = self.get_forms()
@@ -78,21 +70,22 @@ class MultiModelFormView(MultiFormView):
     The object corresponding to the form must use the same key
     """
 
-    def get_objects(self):
-        objects = {}
-        for key in self.form_classes.iterkeys():
-            objects[key] = None
-        return objects
+    def forms_valid(self, forms):
+        for form in forms.itervalues():
+            form.save()
+        return super(MultiModelFormView, self).forms_valid(forms)
 
     def get_forms(self):
         forms = {}
         objects = self.get_objects()
-        initial = self.get_initial_data()
+        initial = self.get_initial()
         form_kwargs = self.get_form_kwargs()
         for key, form_class in self.form_classes.iteritems():
             forms[key] = form_class(instance=objects[key], initial=initial[key], **form_kwargs)
         return forms
 
-    def on_forms_valid(self, forms):
-        for form in forms.itervalues():
-            form.save()
+    def get_objects(self):
+        objects = {}
+        for key in self.form_classes.iterkeys():
+            objects[key] = None
+        return objects
