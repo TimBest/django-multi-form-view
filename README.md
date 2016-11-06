@@ -15,7 +15,8 @@ $ pip install django-multi-form-view
 
 ### MultiFormView ([Example](demo/base/views.py))
 **class multi_form_view.MultiFormView**  
-A single view that can display multiple Django forms. Handles displaying, redisplaying on error, and redirects on form success in.
+A single view that can display multiple Django forms. Handles displaying, redisplaying on error, and
+redirects on form success in.
 
 #### Extends
 * django.views.generic import FormView
@@ -34,7 +35,8 @@ A single view that can display multiple Django forms. Handles displaying, redisp
 * `get_context_data()`  
   Adds the results of `get_forms()` to the context dictionary with the key `'forms'`.
 * `get_forms()`.  
-  Initializes the forms defined in `form_classes` with initial data from `get_initial()` and kwargs from get_form_kwargs().  
+  Initializes the forms defined in `form_classes` with initial data from `get_initial()` and kwargs
+  from get_form_kwargs().
 * `get_form_kwargs()`.
   Build the keyword arguments required to instantiate the form.  
 * `get_initial()`  
@@ -44,7 +46,8 @@ A single view that can display multiple Django forms. Handles displaying, redisp
 
 ### MultiModelFormView ([Example](demo/base/views.py))
 **class multi_form_view.MultiModelFormView**  
-A single view that can display multiple Django ModelForms. Handles displaying, redisplaying on error, and redirects on form success in.
+A single view that can display multiple Django ModelForms. Handles displaying, redisplaying on
+error, and redirects on form success in.
 
 #### Extends
 * multi_form_view.MultiFormView
@@ -53,9 +56,11 @@ A single view that can display multiple Django ModelForms. Handles displaying, r
 * `forms_valid()`  
   Calls `save()` on each form.
 * `get_forms()`.  
-  Initializes the forms defined in `form_classes` with initial data from `get_initial()`, kwargs from get_form_kwargs() and form instance object from `get_objects()`.
+  Initializes the forms defined in `form_classes` with initial data from `get_initial()`, kwargs
+  from get_form_kwargs() and form instance object from `get_objects()`.
 * `get_objects()`  
-  Returns dictionary with the instance objects for each form. Keys should match the corresponding form.
+  Returns dictionary with the instance objects for each form. Keys should match the corresponding
+  form.
 
 ## Demo
 ```bash
