@@ -40,7 +40,7 @@ A single view that can display multiple Django forms. Handles displaying, redisp
 * `get_initial()`  
   Returns a copy of `initial` with empty initial data dictionaries for each form.
 * `post()`
-  Uses `are_forms_valid()` to calls either `forms_valid()` or *  `forms_invalid()`.
+  Uses `are_forms_valid()` to call either `forms_valid()` or `forms_invalid()`.
 
 ### MultiModelFormView ([Example](demo/base/views.py))
 **class multi_form_view.MultiModelFormView**  
