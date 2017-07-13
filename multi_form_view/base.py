@@ -4,6 +4,7 @@ Django class based views for using more than one Form or ModelForm in a single v
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import FormView
+import six
 
 
 class MultiFormView(FormView):
@@ -16,7 +17,7 @@ class MultiFormView(FormView):
         """
         Check if all forms defined in `form_classes` are valid.
         """
-        for form in forms.itervalues():
+        for form in six.itervalues(forms):
             if not form.is_valid():
                 return False
         return True
@@ -60,7 +61,7 @@ class MultiFormView(FormView):
         forms = {}
         initial = self.get_initial()
         form_kwargs = self.get_form_kwargs()
-        for key, form_class in self.form_classes.iteritems():
+        for key, form_class in six.iteritems(self.form_classes):
             forms[key] = form_class(initial=initial[key], **form_kwargs)
         return forms
 
@@ -81,7 +82,7 @@ class MultiFormView(FormView):
         Returns a copy of `initial` with empty initial data dictionaries for each form.
         """
         initial = super(MultiFormView, self).get_initial()
-        for key in self.form_classes.iterkeys():
+        for key in six.iterkeys(self.form_classes):
             initial[key] = {}
         return initial
 
@@ -105,7 +106,7 @@ class MultiModelFormView(MultiFormView):
         """
         Calls `save()` on each form.
         """
-        for form in forms.itervalues():
+        for form in six.itervalues(forms):
             form.save()
         return super(MultiModelFormView, self).forms_valid(forms)
 
@@ -118,7 +119,7 @@ class MultiModelFormView(MultiFormView):
         objects = self.get_objects()
         initial = self.get_initial()
         form_kwargs = self.get_form_kwargs()
-        for key, form_class in self.form_classes.iteritems():
+        for key, form_class in six.iteritems(self.form_classes):
             forms[key] = form_class(instance=objects[key], initial=initial[key], **form_kwargs)
         return forms
 
@@ -128,6 +129,6 @@ class MultiModelFormView(MultiFormView):
         corresponding form.
         """
         objects = {}
-        for key in self.form_classes.iterkeys():
+        for key in six.iterkeys(self.form_classes):
             objects[key] = None
         return objects
