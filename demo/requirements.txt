@@ -1,5 +1,5 @@
 Django==1.9.8
--e git+git@github.com:timbest/django-multi-form-view.git@856ce0148975eeaf9921da3412baef307f8cdd55#egg=django_multi_form_view
+-e git+git@github.com:timbest/django-multi-form-view.git@9f5e099b12ed0a14e481458b87bff882357abaf5#egg=django_multi_form_view
 Pillow==3.3.0
 behave==1.2.5
 behave-django==0.3.0

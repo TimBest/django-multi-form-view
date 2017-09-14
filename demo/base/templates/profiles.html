@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<a href="{% url 'profiles_new' %}">Create Profile</a>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Avatar</th>
+    <th>Background</th>
+    <th></th>
+  </tr>
+  {% for profile in object_list %}
+  <tr>
+    <td>{{ profile.name }}</td>
+    <td>
+      <img src="{{ profile.avatar.image.url }}" height="50" width="50" alt="profile avatar"/>
+      {{ profile.avatar.tag }}
+    </td>
+    <td>
+      <img
+        src="{{ profile.background.image.url }}"
+        height="50"
+        width="50"
+        alt="profile background image"
+      />
+      {{ profile.background.tag }}
+    </td>
+    <td>
+      <a href="{% url 'profiles_edit' profile.id %}">Edit</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
