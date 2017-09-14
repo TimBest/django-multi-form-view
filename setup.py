@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='django-multi-form-view',
-    version='1.1',
+    version='2.0',
     author=u'Tim Best',
     packages=find_packages(),
     url='https://github.com/TimBest/django-multi-form-view',
