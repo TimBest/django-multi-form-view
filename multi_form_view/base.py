@@ -62,19 +62,23 @@ class MultiFormView(FormView):
         initial = self.get_initial()
         form_kwargs = self.get_form_kwargs()
         for key, form_class in six.iteritems(self.form_classes):
-            forms[key] = form_class(initial=initial[key], **form_kwargs)
+            forms[key] = form_class(initial=initial[key], **form_kwargs[key])
         return forms
 
     def get_form_kwargs(self):
         """
         Build the keyword arguments required to instantiate the form.
         """
+
         kwargs = {}
-        if self.request.method in ('POST', 'PUT'):
-            kwargs.update({
-                'data': self.request.POST,
-                'files': self.request.FILES,
-            })
+        for key in six.iterkeys(self.form_classes):
+            if self.request.method in ('POST', 'PUT'):
+                kwargs[key] = {
+                    'data': self.request.POST,
+                    'files': self.request.FILES,
+                }
+            else:
+                kwargs[key] = {}
         return kwargs
 
     def get_initial(self):
@@ -120,7 +124,7 @@ class MultiModelFormView(MultiFormView):
         initial = self.get_initial()
         form_kwargs = self.get_form_kwargs()
         for key, form_class in six.iteritems(self.form_classes):
-            forms[key] = form_class(instance=objects[key], initial=initial[key], **form_kwargs)
+            forms[key] = form_class(instance=objects[key], initial=initial[key], **form_kwargs[key])
         return forms
 
     def get_objects(self):
