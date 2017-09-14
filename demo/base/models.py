@@ -27,3 +27,12 @@ class Record(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class Profile(models.Model):
+    avatar = models.ForeignKey(Photo, related_name="profile_avatars")
+    background = models.ForeignKey(Photo, related_name="profile_backgrounds")
+    name = models.CharField(max_length=100)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

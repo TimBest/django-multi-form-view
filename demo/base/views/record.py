@@ -1,9 +1,9 @@
 from django.core.urlresolvers import reverse
 from django.views.generic.list import ListView
 
-from multi_form_view import MultiFormView, MultiModelFormView
+from multi_form_view import MultiModelFormView
 
-from base.forms import ContactForm, PhotoForm, RecordForm, UserForm
+from base.forms import PhotoForm, RecordForm
 from base.models import Photo, Record
 
 
@@ -14,10 +14,10 @@ class RecordListView(ListView):
 
 class RecordFormView(MultiModelFormView):
     form_classes = {
-      'photo_form' : PhotoForm,
-      'record_form' : RecordForm,
+        'photo_form' : PhotoForm,
+        'record_form' : RecordForm,
     }
-    record_id=None
+    record_id = None
     template_name = 'records_form.html'
 
     def get_objects(self):
@@ -27,8 +27,8 @@ class RecordFormView(MultiModelFormView):
         except Record.DoesNotExist:
             record = None
         return {
-          'record_form': record,
-          'photo_form': record.photo if record else None
+            'record_form': record,
+            'photo_form': record.photo if record else None
         }
 
     def get_success_url(self):
@@ -40,15 +40,3 @@ class RecordFormView(MultiModelFormView):
         record.photo = photo
         record.save()
         return super(RecordFormView, self).forms_valid(forms)
-
-
-class ContactView(MultiFormView):
-    form_classes = {
-      'contact_form' : ContactForm,
-      'user_form' : UserForm,
-    }
-    record_id=None
-    template_name = 'contact.html'
-
-    def get_success_url(self):
-        return reverse('contact_sent')

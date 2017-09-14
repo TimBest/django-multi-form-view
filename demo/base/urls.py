@@ -13,7 +13,11 @@ urlpatterns = [
     url(r'^records/new/$', views.RecordFormView.as_view(), name='records_new'),
     url(r'^records/edit/(?P<record_id>\d+)$', views.RecordFormView.as_view(), name='records_edit'),
 
+    url(r'^profiles/$', views.ProfileListView.as_view(), name='profiles'),
+    url(r'^profiles/new/$', views.ProfileFormView.as_view(), name='profiles_new'),
+    url(r'^profiles/edit/(?P<record_id>\d+)$', views.ProfileFormView.as_view(), name='profiles_edit'),
+
     url(r'^contact/$', views.ContactView.as_view(), name='contact'),
-    url(r'^cntact/sent/$', TemplateView.as_view(template_name='contact-sent.html'), name='contact_sent'),
+    url(r'^cntact/sent/$', TemplateView.as_view(template_name='contact_sent.html'), name='contact_sent'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
