@@ -2,7 +2,6 @@
 [![CircleCI](https://circleci.com/gh/TimBest/django-multi-form-view.svg?style=shield)](https://circleci.com/gh/TimBest/django-multi-form-view)
 [![codecov](https://codecov.io/gh/timbest/django-multi-form-view/branch/master/graph/badge.svg)](https://codecov.io/gh/timbest/django-multi-form-view)
 [![PyPI](https://img.shields.io/pypi/v/django-multi-form-view.svg?maxAge=2592000)](https://pypi.python.org/pypi/django-multi-form-view)
-[![PyPI](https://img.shields.io/pypi/dm/django-multi-form-view.svg?maxAge=2592000)](https://pypi.python.org/pypi/django-multi-form-view)
 
 Django class based views for using more than one Form or ModelForm in a single view.
 
