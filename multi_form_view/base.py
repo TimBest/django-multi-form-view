@@ -2,7 +2,6 @@
 Django class based views for using more than one Form or ModelForm in a single view.
 """
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.views.generic import FormView
 import six
 
@@ -32,15 +31,13 @@ class MultiFormView(FormView):
         """
         Renders a response containing the form errors.
         """
-        context = self.get_context_data(forms=forms)
-        return render(self.request, self.template_name, context)
+        return self.render_to_response(self.get_context_data(forms=forms))
 
-    def get(self, request, **kwargs):
+    def get(self, request, *args, **kwargs):
         """
-        Render the forms.
+        Handles GET requests and instantiates blank versions of the forms.
         """
-        context = self.get_context_data()
-        return render(request, self.template_name, context=context)
+        return self.render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
         """
