@@ -70,7 +70,7 @@ $ python3 manage.py runserver
 ```
 
 ## Testing
-Install [PhantomJS](http://phantomjs.org/)
+Install headless chrome
 ```bash
 $ python3 demo/manage.py behave
 ```
