@@ -90,3 +90,4 @@ ENV/
 
 *.sqlite3
 demo/media/*
+src

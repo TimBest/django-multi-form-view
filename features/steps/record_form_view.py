@@ -1,4 +1,6 @@
 #pylint: disable=function-redefined, no-name-in-module, import-error
+import os
+
 from behave import given
 from behave import then
 from behave import when
@@ -11,7 +13,7 @@ def step_impl(context):
     context.browser.visit(context.get_url('records_new'))
     context.browser.fill('title', 'Test title')
     context.browser.fill('description', 'Test description')
-    context.browser.attach_file('image', 'test.png')
+    context.browser.attach_file('image', os.getcwd() + '/test.png')
     context.browser.choose('tag', Photo.UNKNOWN)
 
 @when('the user submits the form')

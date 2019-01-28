@@ -28,4 +28,5 @@ def step_impl(context):
 @then('the contact form is not successfully submitted')
 def step_impl(context):
     assert context.browser.url == context.get_url('contact')
-    assert context.browser.is_element_present_by_css('.errorlist')
+    # chrome prvents submiting the form since the field is required
+    # assert context.browser.is_element_present_by_css('.errorlist')
