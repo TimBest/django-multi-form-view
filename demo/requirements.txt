@@ -1,14 +1,14 @@
-Django==1.9.8
--e git+git@github.com:timbest/django-multi-form-view.git@9f5e099b12ed0a14e481458b87bff882357abaf5#egg=django_multi_form_view
-Pillow==3.3.0
-behave==1.2.5
-behave-django==0.3.0
+Django==1.11.18
+-e git+git@github.com:timbest/django-multi-form-view.git@d7d82fbbee6646c352c73f0607f152f2cf4fcc8f#egg=django_multi_form_view
+Pillow==5.4.1
+behave==1.2.6
+behave-django==1.1.0
 enum34==1.1.6
-parse==1.6.6
-parse-type==0.3.4
-selenium==3.0.1
+parse==1.11.1
+parse-type==0.4.2
+selenium==3.141.0
 setuptools==25.1.2
 splinter==0.7.5
 coverage==4.2
 codecov==2.0.5
-requests==2.10.0
+requests==2.20.0
