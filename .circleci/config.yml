@@ -3,18 +3,15 @@ jobs:
   build:
     working_directory: ~/django-multi-form-view
     docker:
-      - image: circleci/python:3.6.4
+      - image: circleci/python:3.6.4-browsers
     steps:
       - checkout # checkout source code to working directory
       - run:
-          name: Install Python deps in a venv
+          name: Run Tests
           command: |
             python3 -m venv venv
             . venv/bin/activate
             pip3 install --upgrade pip
             pip3 install -r requirements.txt
-      - run:
-          name: run behave test
-          command: |
             coverage run demo/manage.py behave
             codecov
