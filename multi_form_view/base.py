@@ -102,13 +102,14 @@ class MultiModelFormView(MultiFormView):
     """
     View to handle multiple model form classes.
     """
+    objects = {}
 
     def forms_valid(self, forms):
         """
         Calls `save()` on each form.
         """
-        for form in six.itervalues(forms):
-            form.save()
+        for key, form in six.iteritems(forms):
+            self.objects[key] = form.save()
         return super(MultiModelFormView, self).forms_valid(forms)
 
     def get_forms(self):
