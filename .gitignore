@@ -88,6 +88,9 @@ ENV/
 # Rope project settings
 .ropeproject
 
+# PyCharm project settings
+.idea
+
 *.sqlite3
 demo/media/*
 src
