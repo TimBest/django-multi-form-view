@@ -43,12 +43,12 @@ class MultiFormView(FormView):
         """
         Add forms into the context dictionary.
         """
-        context = {}
         if 'forms' not in kwargs:
-            context['forms'] = self.get_forms()
-        else:
-            context['forms'] = kwargs['forms']
-        return context
+            kwargs['forms'] = self.get_forms()
+        # Override "form" if not present so the original FormView class doesn't try to get a singular form.
+        if 'form' not in kwargs:
+            kwargs['form'] = None
+        return super(MultiFormView, self).get_context_data(**kwargs)
 
     def get_forms(self):
         """
