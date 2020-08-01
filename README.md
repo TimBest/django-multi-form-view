@@ -12,7 +12,7 @@ $ pip install django-multi-form-view
 
 ## Usage
 
-### MultiFormView ([Example](demo/base/views.py))
+### MultiFormView ([Example](demo/base/views/contact.py))
 **class multi_form_view.MultiFormView**
 A single view that can display multiple Django forms. Handles displaying, redisplaying on error, and
 redirects on form success in.
@@ -43,7 +43,7 @@ redirects on form success in.
 * `post()`
   Uses `are_forms_valid()` to call either `forms_valid()` or `forms_invalid()`.
 
-### MultiModelFormView ([Example](demo/base/views.py))
+### MultiModelFormView ([Example](demo/base/views/profile.py))
 **class multi_form_view.MultiModelFormView**
 A single view that can display multiple Django ModelForms. Handles displaying, redisplaying on
 error, and redirects on form success in.
