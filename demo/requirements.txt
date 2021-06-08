@@ -1,6 +1,6 @@
 Django==1.11.18
 -e git+git@github.com:timbest/django-multi-form-view.git@8273846a94cbae1b6b9b87c813744c88207c6216#egg=django_multi_form_view
-Pillow==5.4.1
+Pillow==8.2.0
 behave==1.2.6
 behave-django==1.1.0
 enum34==1.1.6
