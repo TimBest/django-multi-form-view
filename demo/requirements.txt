@@ -10,5 +10,5 @@ selenium==3.141.0
 setuptools==25.1.2
 splinter==0.7.5
 coverage==4.2
-codecov==2.0.5
+codecov==2.0.16
 requests==2.20.0
