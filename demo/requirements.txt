@@ -7,7 +7,7 @@ enum34==1.1.6
 parse==1.11.1
 parse-type==0.4.2
 selenium==3.141.0
-setuptools==25.1.2
+setuptools==65.5.1
 splinter==0.7.5
 coverage==4.2
 codecov==2.0.5
